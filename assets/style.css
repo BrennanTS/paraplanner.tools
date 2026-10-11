@@ -93,9 +93,12 @@ footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 
 
 /* Five worlds */
 .worlds { --cols: 5; --gap: 8px; }
-.worlds a { display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line-hot); padding: 14px 16px; font: 700 16px var(--mono); color: var(--text); }
+.worlds a { position: relative; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line-hot); padding: 14px 16px; font: 700 16px var(--mono); color: var(--text); transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease; }
 .worlds a b { font-size: 11px; color: var(--orange); letter-spacing: .1em; }
-.worlds a:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 14px rgba(0, 216, 255, .18); text-decoration: none; }
+.worlds a::after { content: "→"; position: absolute; right: 14px; bottom: 14px; color: var(--blue); opacity: 0; transform: translateX(-4px); transition: opacity .15s ease, transform .15s ease; }
+.worlds a:hover, .worlds a:focus-visible { transform: translateY(-2px); border-color: var(--blue); color: var(--blue); box-shadow: 0 0 18px rgba(0, 216, 255, .28); text-decoration: none; outline: none; }
+.worlds a:hover::after, .worlds a:focus-visible::after { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .worlds a, .worlds a::after { transition: none; } .worlds a:hover, .worlds a:focus-visible { transform: none; } }
 #jump { margin-bottom: 8px; }
 #jump[hidden] { display: none; }
 

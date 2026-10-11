@@ -29,7 +29,8 @@ a:hover { text-decoration: underline; }
 .brand { font: 700 15px var(--mono); color: var(--text); letter-spacing: .04em; white-space: nowrap; }
 .brand span { color: var(--blue); }
 .brand em { font-style: normal; color: var(--orange); text-shadow: 0 0 8px rgba(255, 138, 31, .5); box-shadow: 0 0 8px rgba(255, 138, 31, .3); font-size: 10px; border: 1px solid var(--orange); padding: 1px 5px; margin-left: 8px; vertical-align: 2px; }
-.nav { display: flex; gap: 4px; }
+.nav { display: grid; grid-auto-flow: column; gap: 4px; }
+.nav a { text-align: center; }
 .nav a { font: 500 13px var(--mono); color: var(--muted); padding: 6px 10px; border: 1px solid transparent; }
 .nav a:hover { color: var(--text); text-decoration: none; }
 .nav a[aria-current="page"] { color: var(--blue); border-color: var(--blue); box-shadow: 0 0 10px rgba(0, 216, 255, .35), inset 0 0 6px rgba(0, 216, 255, .15); }
@@ -48,7 +49,10 @@ h3 { font: 600 15px var(--sans); margin: 0 0 6px; }
 section { padding: 32px 0; border-top: 1px solid var(--line); }
 
 /* Cards & grids */
-.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.grid, .worlds, .assume-grid { --gap: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap); }
+.grid > *, .worlds > *, .assume-grid > * { flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols)); min-width: 0; }
+.grid { --cols: 3; }
+.grid.quad { --cols: 4; }
 .card { background: var(--panel); border: 1px solid var(--line); padding: 18px; position: relative; }
 .card:hover { border-color: var(--blue); box-shadow: 0 0 14px rgba(0, 216, 255, .18); }
 a.card { color: var(--text); }
@@ -76,12 +80,6 @@ input:focus, select:focus { outline: none; border-color: var(--blue); box-shadow
 
 footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 138, 31, .2); padding: 28px 0 40px; margin-top: 32px; color: var(--muted); font: 12px var(--mono); }
 
-@media (max-width: 640px) {
-  .top .wrap { height: auto; padding-top: 12px; padding-bottom: 12px; flex-direction: column; align-items: flex-start; gap: 8px; }
-  .nav { flex-wrap: wrap; }
-  .nav a { padding: 4px 8px; }
-  .hero { padding: 40px 0 28px; }
-}
 
 /* Tags */
 .card .meta { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; font: 500 11px var(--mono); color: var(--muted); }
@@ -89,7 +87,7 @@ footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 
 .tag.orange { color: var(--orange); }
 
 /* Five worlds */
-.worlds { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; }
+.worlds { --cols: 5; --gap: 8px; }
 .worlds a { display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line-hot); padding: 14px 16px; font: 700 16px var(--mono); color: var(--text); }
 .worlds a b { font-size: 11px; color: var(--orange); letter-spacing: .1em; }
 .worlds a:hover { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 14px rgba(0, 216, 255, .18); text-decoration: none; }
@@ -97,7 +95,7 @@ footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 
 #jump[hidden] { display: none; }
 
 /* Assumptions */
-.assume-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.assume-grid { --cols: 4; }
 .assume { border: 1px solid var(--line-hot); padding: 18px; background: var(--panel); }
 .assume-label { font: 500 11px var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
 .assume-value { font: 700 40px/1.1 var(--mono); color: var(--blue); margin: 10px 0 8px; text-shadow: 0 0 16px rgba(0, 216, 255, .35); }
@@ -118,3 +116,25 @@ footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 
 .res-group { padding: 28px 0 4px; scroll-margin-top: 80px; }
 .card.res .ext { color: var(--blue); font-size: 13px; }
 input[type="search"]::-webkit-search-cancel-button { filter: invert(1); }
+
+/* Responsive: rows always split evenly, and any short last row is centered */
+@media (max-width: 1000px) {
+  .grid.quad { --cols: 2; }
+  .assume-grid { --cols: 3; }
+}
+@media (max-width: 860px) {
+  .grid { --cols: 2; }
+  .grid.trio { --cols: 1; }
+  .worlds { --cols: 3; }
+}
+@media (max-width: 720px) {
+  .assume-grid { --cols: 2; }
+  .top .wrap { height: auto; padding-top: 12px; padding-bottom: 12px; flex-direction: column; align-items: stretch; gap: 10px; }
+  .brand { text-align: center; }
+  .nav { grid-auto-flow: row; grid-template-columns: 1fr 1fr; }
+  .nav a { padding: 6px 8px; }
+  .hero { padding: 40px 0 28px; }
+}
+@media (max-width: 560px) {
+  .grid, .grid.quad, .assume-grid, .worlds { --cols: 1; }
+}

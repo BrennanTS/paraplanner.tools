@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Paraplanner.tools</title>
+  <meta name="description" content="Industry updates, tech stack news and everyday tools for paraplanners.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23000'/><text x='5' y='23' font-family='monospace' font-size='18' font-weight='700' fill='%2300f0ff'>P</text><rect x='19' y='18' width='6' height='6' fill='%23ff2bd6'/></svg>">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA</em></a>
+      <nav class="nav">
+        <a href="/" aria-current="page">Insights</a>
+        <a href="/calculators">Calculators</a>
+        <a href="/workflow">Workflow</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="kicker">&gt; signal for the back office</div>
+      <h1>Tools and intel for <span class="glow">paraplanners</span>.</h1>
+      <p class="lede">What's changing in planning software, the advisor tech stack and the rules, plus quick calculators and checklists for the work you do every day.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>$24,500</b><span>2026 401(k) deferral limit</span></div>
+      <div class="stat"><b>$7,500</b><span>2026 IRA limit</span></div>
+      <div class="stat"><b>73</b><span>RMD starting age</span></div>
+      <div class="stat"><b>$11,250</b><span>Age 60–63 catch-up</span></div>
+    </div>
+
+    <section>
+      <h2>Industry feed</h2>
+      <p class="sub">Software releases, tech stack changes and regulatory updates. Each item links to its source.</p>
+      <div class="filters" id="filters">
+        <button aria-pressed="true" data-cat="all">All</button>
+        <button aria-pressed="false" data-cat="software">Software</button>
+        <button aria-pressed="false" data-cat="ai">AI</button>
+        <button aria-pressed="false" data-cat="regulation">Regulation</button>
+        <button aria-pressed="false" data-cat="industry">Industry</button>
+      </div>
+      <div class="grid" id="feed"></div>
+    </section>
+
+    <section>
+      <h2>Tools</h2>
+      <p class="sub">Everything runs in your browser. Nothing you type is sent anywhere.</p>
+      <div class="grid">
+        <a class="card" href="/calculators">
+          <div class="meta"><span class="tag software">calc</span></div>
+          <h3>Calculators</h3>
+          <p>RMDs, retirement projections and federal bracket headroom for Roth conversions.</p>
+        </a>
+        <a class="card" href="/workflow">
+          <div class="meta"><span class="tag ai">ops</span></div>
+          <h3>Workflow</h3>
+          <p>Contribution limit lookup, a meeting prep checklist and a meeting notes template.</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Paraplanner.tools beta. Educational use only, not tax, legal or investment advice. Check figures against primary sources.</div>
+  </footer>
+
+  <script src="/assets/insights.js"></script>
+  <script>
+    const feed = document.getElementById("feed");
+    const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    function render(cat) {
+      feed.innerHTML = window.INSIGHTS
+        .filter(i => cat === "all" || i.category === cat)
+        .map(i => `
+          <article class="card">
+            <div class="meta"><span class="tag ${i.category}">${i.category}</span><span>${esc(i.date)}</span></div>
+            <h3>${esc(i.title)}</h3>
+            <p>${esc(i.body)}</p>
+            <a class="src" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source)} ↗</a>
+          </article>`).join("");
+    }
+    document.getElementById("filters").addEventListener("click", e => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      document.querySelectorAll("#filters button").forEach(b => b.setAttribute("aria-pressed", b === btn));
+      render(btn.dataset.cat);
+    });
+    render("all");
+  </script>
+</body>
+</html>

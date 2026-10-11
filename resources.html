@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resources · Paraplanner.tools</title>
+  <meta name="description" content="Official sources for limits, tax, Social Security, Medicare, compliance and market data.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23000'/><text x='5' y='23' font-family='monospace' font-size='18' font-weight='700' fill='%2300d8ff'>P</text><rect x='19' y='18' width='6' height='6' fill='%23ff8a1f'/></svg>">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA</em></a>
+      <nav class="nav">
+        <a href="/">Insights</a>
+        <a href="/assumptions">Assumptions</a>
+        <a href="/resources" aria-current="page">Resources</a>
+        <a href="/calculators">Calculators</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="kicker">&gt; Go to the source</div>
+      <h1>Resources</h1>
+      <p class="lede">Official sources for the numbers and rules paraplanners look up most. Each link goes to the publisher, so figures are always current.</p>
+    </div>
+
+    <section>
+      <div class="fields" style="max-width:420px; margin-top:0">
+        <label>Search resources<input id="q" type="search" placeholder="e.g. IRMAA, RMD, 529, BrokerCheck" autocomplete="off"></label>
+      </div>
+      <div class="jump" id="jump"></div>
+      <div id="groups"></div>
+      <p class="sub" id="empty" hidden>No resources match that search.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Paraplanner.tools beta. Educational use only, not tax, legal or investment advice.</div>
+  </footer>
+
+  <script src="/assets/resources.js"></script>
+  <script>
+    const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+    document.getElementById("jump").innerHTML = RESOURCES.map(g => `<a href="#${slug(g.group)}">${esc(g.group)}</a>`).join("");
+
+    function render(q) {
+      q = q.trim().toLowerCase();
+      let shown = 0;
+      document.getElementById("groups").innerHTML = RESOURCES.map(g => {
+        const items = g.items.filter(i => !q || [i.name, i.desc, i.org, g.group].join(" ").toLowerCase().includes(q));
+        shown += items.length;
+        if (!items.length) return "";
+        return `<div class="res-group" id="${slug(g.group)}">
+          <h2>${esc(g.group)}</h2>
+          <div class="grid">${items.map(i => `
+            <a class="card res" href="${esc(i.url)}" target="_blank" rel="noopener">
+              <div class="meta"><span class="tag software">${esc(i.org)}</span></div>
+              <h3>${esc(i.name)} <span class="ext">↗</span></h3>
+              <p>${esc(i.desc)}</p>
+            </a>`).join("")}
+          </div>
+        </div>`;
+      }).join("");
+      document.getElementById("empty").hidden = shown > 0;
+      document.getElementById("jump").hidden = !!q;
+    }
+
+    document.getElementById("q").addEventListener("input", e => render(e.target.value));
+    render("");
+  </script>
+
+</body>
+</html>

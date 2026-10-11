@@ -69,7 +69,7 @@ window.INSIGHTS = [
     date: "2026",
     category: "regulation",
     title: "2026 limits: $24,500 401(k), $7,500 IRA",
-    body: "Deferral limit $24,500, age 50+ catch-up $8,000, age 60–63 super catch-up $11,250. IRA limit $7,500 with an inflation-indexed $1,100 catch-up. The Limits tool on the Workflow page uses these figures.",
+    body: "Deferral limit $24,500, age 50+ catch-up $8,000, age 60–63 super catch-up $11,250. IRA limit $7,500 with an inflation-indexed $1,100 catch-up.",
     source: "InvestmentNews",
     url: "https://www.investmentnews.com/retirement-planning/irs-reveals-new-401k-ira-contribution-limits-for-2026/263029"
   },

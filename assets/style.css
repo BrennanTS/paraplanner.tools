@@ -118,3 +118,14 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 40px; margin-top: 32
   .nav a { padding: 4px 8px; }
   .hero { padding: 40px 0 28px; }
 }
+
+/* Assumptions */
+.assume-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.assume { border: 1px solid var(--line-hot); padding: 18px; background: var(--panel); }
+.assume-label { font: 500 11px var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.assume-value { font: 700 40px/1.1 var(--mono); color: var(--cyan); margin: 10px 0 8px; text-shadow: 0 0 16px rgba(0, 240, 255, .35); }
+.assume-value span { font-size: 20px; color: var(--muted); margin-left: 2px; text-shadow: none; }
+.assume-note { font-size: 13px; color: var(--muted); }
+.card.soon { border-style: dashed; }
+.card.soon h3 { color: var(--muted); }
+.assume-value.date { font-size: 28px; padding: 6px 0; }

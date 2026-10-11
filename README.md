@@ -1,9 +1,10 @@
 # Paraplanner.tools (beta)
 
-A static site with industry updates and everyday tools for paraplanners. There's no build step and no dependencies.
+A static site with industry updates and planning defaults for paraplanners. There's no build step and no dependencies.
 
 - `index.html`: landing page and industry feed. Edit `assets/insights.js` to add items.
-- `calculators.html`: RMD, retirement projection, 2026 bracket headroom.
-- `workflow.html`: contribution limits, meeting prep checklist, notes template.
+- `assumptions.html`: the team's default plan assumptions. Edit `assets/assumptions.js` to change them.
+
+To refresh the 30-year CPI inflation figure from BLS, run `node scripts/update-cpi.mjs`.
 
 To preview locally, run `npx serve .`. Deploys to Vercel with no config beyond `vercel.json`.

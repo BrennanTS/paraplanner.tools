@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assumptions · Paraplanner.tools</title>
+  <meta name="description" content="Default planning assumptions used across all client plans.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23000'/><text x='5' y='23' font-family='monospace' font-size='18' font-weight='700' fill='%2300f0ff'>P</text><rect x='19' y='18' width='6' height='6' fill='%23ff2bd6'/></svg>">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA</em></a>
+      <nav class="nav">
+        <a href="/">Insights</a>
+        <a href="/assumptions" aria-current="page">Assumptions</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="kicker">&gt; one source of truth</div>
+      <h1>Planning assumptions</h1>
+      <p class="lede">The team's default assumptions for every plan. Start here before building or updating a plan in any software.</p>
+    </div>
+
+    <section>
+      <h2>Defaults for all plans</h2>
+      <p class="sub">Use these unless the advisor approves a client-specific change.</p>
+      <div class="assume-grid" id="defaults"></div>
+      <div style="margin-top:14px; display:flex; gap:8px; align-items:center">
+        <button class="btn primary" id="copy">Copy assumptions</button>
+        <span id="copy-status" style="font:12px var(--mono); color:var(--green)"></span>
+      </div>
+      <p class="disclaimer" id="cpi-note"></p>
+    </section>
+
+    <section>
+      <h2>Growth rates by platform</h2>
+      <p class="sub">Capital market assumptions for each planning tool the team uses.</p>
+      <div class="grid" id="platforms"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Paraplanner.tools beta. Internal planning defaults, not investment advice.</div>
+  </footer>
+
+  <script src="/assets/assumptions.js"></script>
+  <script>
+    document.getElementById("defaults").innerHTML = ASSUMPTIONS.map(a => `
+      <div class="assume">
+        <div class="assume-label">${a.label}</div>
+        <div class="assume-value${a.unit === "date" ? " date" : ""}">${a.value}${a.unit === "%" ? "<span>%</span>" : ""}</div>
+        <div class="assume-note">${a.note}</div>
+      </div>`).join("");
+
+    document.getElementById("platforms").innerHTML = PLATFORMS.map(p => `
+      <div class="card soon">
+        <div class="meta"><span class="tag ai">coming soon</span></div>
+        <h3>${p} growth rates</h3>
+        <p>Asset class returns and standard deviations for ${p}.</p>
+      </div>`).join("");
+
+    document.getElementById("cpi-note").innerHTML =
+      `Inflation source: BLS ${CPI.series}, compound annual change ${CPI.from} to ${CPI.to}. ` +
+      `<a href="https://data.bls.gov/timeseries/CUUR0000SA0" target="_blank" rel="noopener">View series ↗</a>`;
+
+    document.getElementById("copy").addEventListener("click", async () => {
+      const text = ASSUMPTIONS.map(a => `${a.label}: ${a.value}${a.unit === "%" ? "%" : ""}`).join("\n");
+      const status = document.getElementById("copy-status");
+      try { await navigator.clipboard.writeText(text); status.textContent = "Copied"; }
+      catch { status.textContent = "Copy failed"; }
+      setTimeout(() => status.textContent = "", 2000);
+    });
+  </script>
+</body>
+</html>

@@ -16,7 +16,6 @@
     <div class="wrap">
       <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA</em></a>
       <nav class="nav">
-        <a href="/">Insights</a>
         <a href="/assumptions">Assumptions</a>
         <a href="/resources" aria-current="page">Resources</a>
         <a href="/calculators">Calculators</a>
@@ -28,14 +27,14 @@
     <div class="hero">
       <div class="kicker">&gt; Go to the source</div>
       <h1>Resources</h1>
-      <p class="lede">Official sources for the numbers and rules paraplanners look up most. Each link goes to the publisher, so figures are always current.</p>
+      <p class="lede">Official sources for the numbers and rules behind a plan, organized by the five worlds. Each link goes to the publisher, so figures are always current.</p>
     </div>
 
     <section>
       <div class="fields" style="max-width:420px; margin-top:0">
-        <label>Search resources<input id="q" type="search" placeholder="e.g. IRMAA, RMD, 529, BrokerCheck" autocomplete="off"></label>
+        <label>Search resources<input id="q" type="search" placeholder="e.g. IRMAA, RMD, 529, estate tax" autocomplete="off"></label>
       </div>
-      <div class="jump" id="jump"></div>
+      <div class="worlds" id="jump"></div>
       <div id="groups"></div>
       <p class="sub" id="empty" hidden>No resources match that search.</p>
     </section>
@@ -50,7 +49,7 @@
     const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-    document.getElementById("jump").innerHTML = RESOURCES.map(g => `<a href="#${slug(g.group)}">${esc(g.group)}</a>`).join("");
+    document.getElementById("jump").innerHTML = RESOURCES.map((g, n) => `<a href="#${slug(g.group)}"><b>0${n + 1}</b>${esc(g.group)}</a>`).join("");
 
     function render(q) {
       q = q.trim().toLowerCase();
@@ -61,9 +60,10 @@
         if (!items.length) return "";
         return `<div class="res-group" id="${slug(g.group)}">
           <h2>${esc(g.group)}</h2>
+          <p class="sub">${esc(g.blurb)}</p>
           <div class="grid">${items.map(i => `
             <a class="card res" href="${esc(i.url)}" target="_blank" rel="noopener">
-              <div class="meta"><span class="tag software">${esc(i.org)}</span></div>
+              <div class="meta"><span class="tag">${esc(i.org)}</span></div>
               <h3>${esc(i.name)} <span class="ext">↗</span></h3>
               <p>${esc(i.desc)}</p>
             </a>`).join("")}

@@ -1,8 +1,8 @@
 # Paraplanner.tools (beta)
 
-A static site with industry updates and planning defaults for paraplanners. There's no build step and no dependencies.
+A static site with planning assumptions, resources and tools for building high-quality financial plans. There's no build step and no dependencies.
 
-- `index.html`: landing page and industry feed. Edit `assets/insights.js` to add items.
+- `index.html`: home page.
 - `assumptions.html`: the team's default plan assumptions. Edit `assets/assumptions.js` to change them.
 - `resources.html`: directory of official sources. Edit `assets/resources.js` to add links.
 

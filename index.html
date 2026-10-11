@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Paraplanner.tools</title>
-  <meta name="description" content="Industry updates, tech stack news and everyday tools for paraplanners.">
+  <meta name="description" content="Assumptions, resources and tools for building high-quality financial plans.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -16,7 +16,6 @@
     <div class="wrap">
       <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA</em></a>
       <nav class="nav">
-        <a href="/" aria-current="page">Insights</a>
         <a href="/assumptions">Assumptions</a>
         <a href="/resources">Resources</a>
         <a href="/calculators">Calculators</a>
@@ -27,67 +26,44 @@
   <main class="wrap">
     <div class="hero">
       <div class="kicker">&gt; &ldquo;All models are wrong, but some are useful&rdquo; &mdash; George E. P. Box</div>
-      <h1>Tools and intel for <span class="glow">paraplanners</span>.</h1>
-      <p class="lede">What's changing in planning software, the advisor tech stack and the rules, plus the team's planning assumptions and a directory of official resources.</p>
+      <h1>Build plans that <span class="glow">hold up</span>.</h1>
+      <p class="lede">Consistent assumptions, official sources and practical tools for building high-quality financial plans.</p>
     </div>
 
     <section>
-      <h2>Industry feed</h2>
-      <p class="sub">Software releases, tech stack changes and regulatory updates. Each item links to its source.</p>
-      <div class="filters" id="filters">
-        <button aria-pressed="true" data-cat="all">All</button>
-        <button aria-pressed="false" data-cat="software">Software</button>
-        <button aria-pressed="false" data-cat="ai">AI</button>
-        <button aria-pressed="false" data-cat="regulation">Regulation</button>
-        <button aria-pressed="false" data-cat="industry">Industry</button>
+      <h2>Start here</h2>
+      <p class="sub">Every plan starts from the same foundation.</p>
+      <div class="grid">
+        <a class="card" href="/assumptions">
+          <h3>Planning assumptions</h3>
+          <p>The team's life expectancy, inflation, cash and annuity growth rates, and simulation start date.</p>
+        </a>
+        <a class="card" href="/resources">
+          <h3>Resources</h3>
+          <p>Official sources for limits, rules and data, organized by the five worlds of a plan.</p>
+        </a>
+        <a class="card" href="/calculators">
+          <h3>Calculators</h3>
+          <p>Planning calculators for the team. Coming soon.</p>
+        </a>
       </div>
-      <div class="grid" id="feed"></div>
     </section>
 
     <section>
-      <h2>Tools</h2>
-      <p class="sub">Start every plan from the same defaults.</p>
-      <div class="grid">
-        <a class="card" href="/assumptions">
-          <div class="meta"><span class="tag software">defaults</span></div>
-          <h3>Planning assumptions</h3>
-          <p>The team's default life expectancy, inflation, cash and annuity growth rates, and simulation start date for every plan.</p>
-        </a>
-        <a class="card" href="/resources">
-          <div class="meta"><span class="tag industry">links</span></div>
-          <h3>Resources</h3>
-          <p>Contribution limits, tax, Social Security, Medicare, compliance and market data, straight from the official sources.</p>
-        </a>
+      <h2>The five worlds</h2>
+      <p class="sub">Every complete plan covers each of these.</p>
+      <div class="worlds">
+        <a href="/resources#income"><b>01</b>Income</a>
+        <a href="/resources#investments"><b>02</b>Investments</a>
+        <a href="/resources#tax"><b>03</b>Tax</a>
+        <a href="/resources#healthcare"><b>04</b>Healthcare</a>
+        <a href="/resources#legacy"><b>05</b>Legacy</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap">Paraplanner.tools beta. Educational use only, not tax, legal or investment advice. Check figures against primary sources.</div>
+    <div class="wrap">Paraplanner.tools beta. Educational use only, not tax, legal or investment advice.</div>
   </footer>
-
-  <script src="/assets/insights.js"></script>
-  <script>
-    const feed = document.getElementById("feed");
-    const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-    function render(cat) {
-      feed.innerHTML = window.INSIGHTS
-        .filter(i => cat === "all" || i.category === cat)
-        .map(i => `
-          <article class="card">
-            <div class="meta"><span class="tag ${i.category}">${i.category}</span><span>${esc(i.date)}</span></div>
-            <h3>${esc(i.title)}</h3>
-            <p>${esc(i.body)}</p>
-            <a class="src" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source)} ↗</a>
-          </article>`).join("");
-    }
-    document.getElementById("filters").addEventListener("click", e => {
-      const btn = e.target.closest("button");
-      if (!btn) return;
-      document.querySelectorAll("#filters button").forEach(b => b.setAttribute("aria-pressed", b === btn));
-      render(btn.dataset.cat);
-    });
-    render("all");
-  </script>
 </body>
 </html>

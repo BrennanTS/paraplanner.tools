@@ -16,7 +16,6 @@
     <div class="wrap">
       <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA</em></a>
       <nav class="nav">
-        <a href="/">Insights</a>
         <a href="/assumptions" aria-current="page">Assumptions</a>
         <a href="/resources">Resources</a>
         <a href="/calculators">Calculators</a>
@@ -64,7 +63,7 @@
 
     document.getElementById("platforms").innerHTML = PLATFORMS.map(p => `
       <div class="card soon">
-        <div class="meta"><span class="tag ai">coming soon</span></div>
+        <div class="meta"><span class="tag orange">coming soon</span></div>
         <h3>${p} growth rates</h3>
         <p>Asset class returns and standard deviations for ${p}.</p>
       </div>`).join("");

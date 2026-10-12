@@ -59,9 +59,7 @@ a.card { color: var(--text); transition: transform .15s ease, border-color .15s 
 a.card h3 { transition: color .15s ease; }
 a.card:hover, a.card:focus-visible { text-decoration: none; transform: translateY(-2px); border-color: var(--blue); box-shadow: 0 0 18px rgba(0, 216, 255, .28); outline: none; }
 a.card:hover h3, a.card:focus-visible h3 { color: var(--blue); }
-.card .go { display: inline-block; color: var(--blue); opacity: 0; transform: translateX(-4px); transition: opacity .15s ease, transform .15s ease; }
-a.card:hover .go, a.card:focus-visible .go { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { a.card, a.card .go { transition: none; } a.card:hover, a.card:focus-visible { transform: none; } }
+@media (prefers-reduced-motion: reduce) { a.card, .res-row .go { transition: none; } a.card:hover, a.card:focus-visible, a.res-row:hover .go { transform: none; } }
 .card p { margin: 0; color: var(--muted); font-size: 14px; }
 
 .btn {
@@ -134,7 +132,6 @@ input[type="search"]::-webkit-search-cancel-button { filter: invert(1); }
 }
 @media (max-width: 860px) {
   .grid { --cols: 2; }
-  .grid.trio { --cols: 1; }
   .worlds { --cols: 3; }
 }
 @media (max-width: 720px) {
@@ -163,9 +160,12 @@ a.res-row:hover .res-name, a.res-row:focus-visible .res-name { color: var(--blue
 .res-name { font-weight: 600; transition: color .15s ease; }
 .res-desc { color: var(--muted); font-size: 14px; }
 .res-row .tag { flex: none; }
+.res-row .go { flex: none; color: var(--blue); opacity: .35; transition: opacity .15s ease, transform .15s ease; }
+a.res-row:hover .go, a.res-row:focus-visible .go { opacity: 1; transform: translateX(3px); }
+section > h2 + .res-list { margin-top: 16px; }
 .res-row.soon .res-name { color: var(--muted); }
 .assume-set + .assume-set { margin-top: 22px; }
 .set-label { font: 500 11px var(--mono); color: var(--orange); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px; }
 @media (max-width: 560px) {
-  .res-row { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .res-row:has(.tag) { flex-direction: column; align-items: flex-start; gap: 8px; }
 }

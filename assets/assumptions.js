@@ -7,13 +7,13 @@ window.CPI = {
 };
 
 window.ASSUMPTIONS = [
-  { label: "Life expectancy", value: "95", unit: "age", note: "All clients and spouses" },
-  { label: "Inflation", value: CPI.rate.toFixed(2), unit: "%", note: `30-year annualized CPI-U, ${CPI.from} – ${CPI.to}` },
-  { label: "Checking / savings / cash", value: "0.00", unit: "%", note: "No growth assumed" },
-  { label: "Money market / CDs", value: CPI.rate.toFixed(2), unit: "%", note: "Set equal to 30-year CPI" },
-  { label: "Income annuity growth", value: "2.50", unit: "%", note: "Income / payout annuities" },
-  { label: "Accumulation annuity growth", value: "4.50", unit: "%", note: "Deferred / accumulation annuities" },
-  { label: "Cash flow simulation start", value: "Jan 1, 2027", unit: "date", note: "Start date for all cash flow projections" }
+  { group: "Timeline", label: "Life expectancy", value: "95", unit: "age", note: "All clients and spouses" },
+  { group: "Growth rates", label: "Inflation", value: CPI.rate.toFixed(2), unit: "%", note: `30-year annualized CPI-U, ${CPI.from} – ${CPI.to}` },
+  { group: "Growth rates", label: "Checking / savings / cash", value: "0.00", unit: "%", note: "No growth assumed" },
+  { group: "Growth rates", label: "Money market / CDs", value: CPI.rate.toFixed(2), unit: "%", note: "Set equal to 30-year CPI" },
+  { group: "Growth rates", label: "Income annuity growth", value: "2.50", unit: "%", note: "Income / payout annuities" },
+  { group: "Growth rates", label: "Accumulation annuity growth", value: "4.50", unit: "%", note: "Deferred / accumulation annuities" },
+  { group: "Timeline", label: "Cash flow simulation start", value: "Jan 1, 2027", unit: "date", note: "Start date for all cash flow projections" }
 ];
 
 window.PLATFORMS = ["eMoney", "RightCapital", "IncomeLab", "Retirement Analyzer"];

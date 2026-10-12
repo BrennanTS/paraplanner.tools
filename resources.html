@@ -28,14 +28,14 @@
     <div class="hero">
       <div class="kicker">&gt; Go to the source</div>
       <h1>Resources</h1>
-      <p class="lede">Official sources for the numbers and rules behind a plan, organized by the five worlds. Each link goes to the publisher, so figures are always current.</p>
+      <p class="lede">Official sources for the numbers and rules behind a plan. Pick a world, or search them all. Each link goes to the publisher, so figures are always current.</p>
     </div>
 
     <section>
-      <div class="fields" style="max-width:420px; margin-top:0">
-        <label>Search resources<input id="q" type="search" placeholder="e.g. IRMAA, RMD, 529, estate tax" autocomplete="off"></label>
+      <div class="worlds tabs" id="jump" role="tablist"></div>
+      <div class="fields search">
+        <label>Search all resources<input id="q" type="search" placeholder="e.g. IRMAA, RMD, 529, estate tax" autocomplete="off"></label>
       </div>
-      <div class="worlds" id="jump"></div>
       <div id="groups"></div>
       <p class="sub" id="empty" hidden>No resources match that search.</p>
     </section>
@@ -50,33 +50,54 @@
     const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
-    document.getElementById("jump").innerHTML = RESOURCES.map((g, n) => `<a href="#${slug(g.group)}"><b>0${n + 1}</b>${esc(g.group)}</a>`).join("");
+    const jump = document.getElementById("jump");
+    const groups = document.getElementById("groups");
+    const ids = RESOURCES.map(g => slug(g.group));
+    let active = ids.includes(location.hash.slice(1)) ? location.hash.slice(1) : ids[0];
 
-    function render(q) {
-      q = q.trim().toLowerCase();
+    jump.innerHTML = RESOURCES.map((g, n) =>
+      `<a href="#${ids[n]}" role="tab" data-id="${ids[n]}"><b>0${n + 1}</b>${esc(g.group)}</a>`).join("");
+
+    const row = i => `
+      <a class="res-row" href="${esc(i.url)}" target="_blank" rel="noopener">
+        <span class="res-text"><span class="res-name">${esc(i.name)} <span class="ext">↗</span></span><span class="res-desc">${esc(i.desc)}</span></span>
+        <span class="tag">${esc(i.org)}</span>
+      </a>`;
+
+    const block = (g, items) => `
+      <div class="res-group">
+        <h2>${esc(g.group)}</h2>
+        <p class="sub">${esc(g.blurb)}</p>
+        <div class="res-list">${items.map(row).join("")}</div>
+      </div>`;
+
+    function render() {
+      const q = document.getElementById("q").value.trim().toLowerCase();
+      jump.querySelectorAll("a").forEach(a => a.setAttribute("aria-selected", !q && a.dataset.id === active));
       let shown = 0;
-      document.getElementById("groups").innerHTML = RESOURCES.map(g => {
-        const items = g.items.filter(i => !q || [i.name, i.desc, i.org, g.group].join(" ").toLowerCase().includes(q));
+      groups.innerHTML = RESOURCES.map(g => {
+        if (!q) return slug(g.group) === active ? (shown += g.items.length, block(g, g.items)) : "";
+        const items = g.items.filter(i => [i.name, i.desc, i.org, g.group].join(" ").toLowerCase().includes(q));
         shown += items.length;
-        if (!items.length) return "";
-        return `<div class="res-group" id="${slug(g.group)}">
-          <h2>${esc(g.group)}</h2>
-          <p class="sub">${esc(g.blurb)}</p>
-          <div class="grid">${items.map(i => `
-            <a class="card res" href="${esc(i.url)}" target="_blank" rel="noopener">
-              <div class="meta"><span class="tag">${esc(i.org)}</span></div>
-              <h3>${esc(i.name)} <span class="ext">↗</span></h3>
-              <p>${esc(i.desc)}</p>
-            </a>`).join("")}
-          </div>
-        </div>`;
+        return items.length ? block(g, items) : "";
       }).join("");
       document.getElementById("empty").hidden = shown > 0;
-      document.getElementById("jump").hidden = !!q;
     }
 
-    document.getElementById("q").addEventListener("input", e => render(e.target.value));
-    render("");
+    jump.addEventListener("click", e => {
+      const tab = e.target.closest("a");
+      if (!tab) return;
+      e.preventDefault();
+      active = tab.dataset.id;
+      document.getElementById("q").value = "";
+      history.replaceState(null, "", `#${active}`);
+      render();
+    });
+    window.addEventListener("hashchange", () => {
+      if (ids.includes(location.hash.slice(1))) { active = location.hash.slice(1); render(); }
+    });
+    document.getElementById("q").addEventListener("input", render);
+    render();
   </script>
 
 </body>

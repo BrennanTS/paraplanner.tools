@@ -34,7 +34,7 @@
     <section>
       <h2>Defaults for all plans</h2>
       <p class="sub">Current assumptions in use across client plans.</p>
-      <div class="assume-grid" id="defaults"></div>
+      <div id="defaults"></div>
       <div style="margin-top:14px; display:flex; gap:8px; align-items:center">
         <button class="btn primary" id="copy">Copy assumptions</button>
         <span id="copy-status" style="font:12px var(--mono); color:var(--blue-soft)"></span>
@@ -45,7 +45,7 @@
     <section>
       <h2>Growth rates by platform</h2>
       <p class="sub">Capital market assumptions for each planning tool the team uses.</p>
-      <div class="grid quad" id="platforms"></div>
+      <div class="res-list" id="platforms"></div>
     </section>
   </main>
 
@@ -55,18 +55,22 @@
 
   <script src="/assets/assumptions.js"></script>
   <script>
-    document.getElementById("defaults").innerHTML = ASSUMPTIONS.map(a => `
+    const card = a => `
       <div class="assume">
         <div class="assume-label">${a.label}</div>
         <div class="assume-value${a.unit === "date" ? " date" : ""}">${a.value}${a.unit === "%" ? "<span>%</span>" : ""}</div>
         <div class="assume-note">${a.note}</div>
-      </div>`).join("");
+      </div>`;
+    document.getElementById("defaults").innerHTML = [...new Set(ASSUMPTIONS.map(a => a.group))].map(g => {
+      const items = ASSUMPTIONS.filter(a => a.group === g);
+      return `<div class="assume-set"><div class="set-label">${g}</div>
+        <div class="assume-grid set-${items.length}">${items.map(card).join("")}</div></div>`;
+    }).join("");
 
     document.getElementById("platforms").innerHTML = PLATFORMS.map(p => `
-      <div class="card soon">
-        <div class="meta"><span class="tag orange">coming soon</span></div>
-        <h3>${p} growth rates</h3>
-        <p>Asset class returns and standard deviations for ${p}.</p>
+      <div class="res-row soon">
+        <span class="res-text"><span class="res-name">${p} growth rates</span><span class="res-desc">Asset class returns and standard deviations for ${p}.</span></span>
+        <span class="tag orange">coming soon</span>
       </div>`).join("");
 
     document.getElementById("cpi-note").innerHTML =

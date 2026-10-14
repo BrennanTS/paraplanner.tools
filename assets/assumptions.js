@@ -8,7 +8,7 @@ window.CPI = {
 
 window.ASSUMPTIONS = [
   { group: "Timeline", label: "Life expectancy", value: "95", unit: "age", note: "All clients and spouses" },
-  { group: "Growth rates", label: "Inflation", value: CPI.rate.toFixed(2), unit: "%", note: `30-year annualized CPI-U, ${CPI.from} – ${CPI.to}` },
+  { group: "Growth rates", label: "Inflation", value: CPI.rate.toFixed(2), unit: "%", note: `30-year annualized CPI-U, ${CPI.from} – ${CPI.to}`, link: "https://data.bls.gov/timeseries/CUUR0000SA0" },
   { group: "Growth rates", label: "Checking / savings / cash", value: "0.00", unit: "%", note: "No growth assumed" },
   { group: "Growth rates", label: "Money market / CDs", value: CPI.rate.toFixed(2), unit: "%", note: "Set equal to 30-year CPI" },
   { group: "Growth rates", label: "Income annuity growth", value: "2.50", unit: "%", note: "Income / payout annuities" },

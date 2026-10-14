@@ -32,14 +32,17 @@
     </div>
 
     <section>
-      <h2>Defaults for all plans</h2>
-      <p class="sub">Current assumptions in use across client plans.</p>
-      <div id="defaults"></div>
-      <div style="margin-top:14px; display:flex; gap:8px; align-items:center">
-        <button class="btn primary" id="copy">Copy assumptions</button>
-        <span id="copy-status" style="font:12px var(--mono); color:var(--blue-soft)"></span>
+      <div class="section-head">
+        <div>
+          <h2>Defaults for all plans</h2>
+          <p class="sub">Current assumptions in use across client plans.</p>
+        </div>
+        <div class="copy-wrap">
+          <button class="btn" id="copy">Copy assumptions</button>
+          <span id="copy-status"></span>
+        </div>
       </div>
-      <p class="disclaimer" id="cpi-note"></p>
+      <div id="defaults"></div>
     </section>
 
     <section>
@@ -55,27 +58,20 @@
 
   <script src="/assets/assumptions.js"></script>
   <script>
-    const card = a => `
-      <div class="assume">
-        <div class="assume-label">${a.label}</div>
-        <div class="assume-value${a.unit === "date" ? " date" : ""}">${a.value}${a.unit === "%" ? "<span>%</span>" : ""}</div>
-        <div class="assume-note">${a.note}</div>
+    const row = a => `
+      <div class="assume-row">
+        <span class="res-text"><span class="res-name">${a.label}</span><span class="res-desc">${a.note}${a.link ? ` · <a href="${a.link}" target="_blank" rel="noopener">BLS ↗</a>` : ""}</span></span>
+        <span class="assume-num${a.unit === "date" ? " date" : ""}">${a.value}${a.unit === "%" ? "<span>%</span>" : ""}</span>
       </div>`;
-    document.getElementById("defaults").innerHTML = [...new Set(ASSUMPTIONS.map(a => a.group))].map(g => {
-      const items = ASSUMPTIONS.filter(a => a.group === g);
-      return `<div class="assume-set"><div class="set-label">${g}</div>
-        <div class="assume-grid set-${items.length}">${items.map(card).join("")}</div></div>`;
-    }).join("");
+    document.getElementById("defaults").innerHTML = [...new Set(ASSUMPTIONS.map(a => a.group))].map(g =>
+      `<div class="assume-set"><div class="set-label">${g}</div>
+        <div class="res-list">${ASSUMPTIONS.filter(a => a.group === g).map(row).join("")}</div></div>`).join("");
 
     document.getElementById("platforms").innerHTML = PLATFORMS.map(p => `
       <div class="res-row soon">
         <span class="res-text"><span class="res-name">${p} growth rates</span><span class="res-desc">Asset class returns and standard deviations for ${p}.</span></span>
         <span class="tag orange">coming soon</span>
       </div>`).join("");
-
-    document.getElementById("cpi-note").innerHTML =
-      `Inflation source: BLS ${CPI.series}, compound annual change ${CPI.from} to ${CPI.to}. ` +
-      `<a href="https://data.bls.gov/timeseries/CUUR0000SA0" target="_blank" rel="noopener">View series ↗</a>`;
 
     document.getElementById("copy").addEventListener("click", async () => {
       const text = ASSUMPTIONS.map(a => `${a.label}: ${a.value}${a.unit === "%" ? "%" : ""}`).join("\n");

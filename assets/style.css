@@ -19,7 +19,7 @@ html, body { margin: 0; background: var(--bg); color: var(--text); }
 body { font: 15px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
 a { color: var(--blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
-::selection { background: var(--orange); color: #000; }
+::selection { background: var(--blue); color: #000; }
 
 .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
 
@@ -28,7 +28,8 @@ a:hover { text-decoration: underline; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
 .brand { font: 700 15px var(--mono); color: var(--text); letter-spacing: .04em; white-space: nowrap; }
 .brand span { color: var(--blue); }
-.brand em { font-style: normal; color: var(--orange); text-shadow: 0 0 8px rgba(255, 138, 31, .5); box-shadow: 0 0 8px rgba(255, 138, 31, .3); font-size: 10px; border: 1px solid var(--orange); padding: 1px 5px; margin-left: 8px; vertical-align: 2px; }
+.brand:hover { text-decoration: none; }
+.brand em { font-style: normal; color: var(--text); font-size: 10px; border: 1px solid var(--text); padding: 1px 5px; margin-left: 8px; vertical-align: 2px; }
 .nav { display: grid; grid-auto-flow: column; gap: 4px; }
 .nav a { text-align: center; }
 .nav a { font: 500 13px var(--mono); color: var(--muted); padding: 6px 10px; border: 1px solid transparent; }
@@ -42,7 +43,7 @@ h1 { font: 700 clamp(30px, 5vw, 48px)/1.1 var(--mono); margin: 12px 0 16px; lett
 h1 .glow { color: var(--blue); text-shadow: 0 0 18px rgba(0, 216, 255, .45); }
 .lede { color: var(--muted); max-width: 640px; font-size: 17px; margin: 0; }
 h2 { font: 700 18px var(--mono); margin: 0 0 4px; letter-spacing: .02em; }
-h2::before { content: "// "; color: var(--orange); text-shadow: 0 0 10px rgba(255, 138, 31, .55); }
+h2::before { content: "// "; color: var(--blue); text-shadow: 0 0 10px rgba(0, 216, 255, .5); }
 h3 { font: 600 15px var(--sans); margin: 0 0 6px; }
 .sub { color: var(--muted); margin: 0 0 20px; font-size: 14px; }
 
@@ -78,9 +79,9 @@ input, select {
 }
 input:focus, select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
 
-.disclaimer { font-size: 12px; color: var(--muted); border-left: 2px solid var(--orange); padding: 6px 12px; margin: 16px 0 0; }
+.disclaimer { font-size: 12px; color: var(--muted); border-left: 2px solid var(--blue); padding: 6px 12px; margin: 16px 0 0; }
 
-footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 138, 31, .2); padding: 28px 0 40px; margin-top: 32px; color: var(--muted); font: 12px var(--mono); }
+footer { border-top: 1px solid var(--line-hot); padding: 28px 0 40px; margin-top: 32px; color: var(--muted); font: 12px var(--mono); }
 
 
 /* Tags */
@@ -91,7 +92,7 @@ footer { border-top: 1px solid var(--orange); box-shadow: 0 -1px 12px rgba(255, 
 /* Five worlds */
 .worlds { --cols: 5; --gap: 8px; }
 .worlds a { position: relative; display: flex; flex-direction: column; gap: 4px; border: 1px solid var(--line-hot); padding: 14px 16px; font: 700 16px var(--mono); color: var(--text); transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease; }
-.worlds a b { font-size: 11px; color: var(--orange); letter-spacing: .1em; }
+.worlds a b { font-size: 11px; color: var(--muted); letter-spacing: .1em; }
 .worlds a::after { content: "→"; position: absolute; right: 14px; bottom: 14px; color: var(--blue); opacity: 0; transform: translateX(-4px); transition: opacity .15s ease, transform .15s ease; }
 .worlds a:hover, .worlds a:focus-visible { transform: translateY(-2px); border-color: var(--blue); color: var(--blue); box-shadow: 0 0 18px rgba(0, 216, 255, .28); text-decoration: none; outline: none; }
 .worlds a:hover::after, .worlds a:focus-visible::after { opacity: 1; transform: none; }
@@ -142,7 +143,7 @@ a.res-row:hover .go, a.res-row:focus-visible .go { opacity: 1; transform: transl
 section > h2 + .res-list { margin-top: 16px; }
 .res-row.soon .res-name { color: var(--muted); }
 .assume-set + .assume-set { margin-top: 22px; }
-.set-label { font: 500 11px var(--mono); color: var(--orange); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px; }
+.set-label { font: 500 11px var(--mono); color: var(--text); text-transform: uppercase; letter-spacing: .14em; margin-bottom: 10px; }
 @media (max-width: 560px) {
   .res-row:has(.tag) { flex-direction: column; align-items: flex-start; gap: 8px; }
 }

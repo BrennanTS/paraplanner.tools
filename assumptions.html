@@ -15,7 +15,8 @@
   <header class="top">
     <div class="wrap">
       <a class="brand" href="/">PARAPLANNER<span>.tools</span><em>BETA<i>|</i><span>RESTRICTED ACCESS</span></em></a>
-      <nav class="nav">
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><span></span><span></span><span></span></button>
+      <nav class="nav" id="site-nav">
         <a href="/assumptions" aria-current="page">Assumptions</a>
         <a href="/resources">Resources</a>
         <a href="/calculators">Calculators</a>
@@ -81,5 +82,6 @@
       setTimeout(() => status.textContent = "", 2000);
     });
   </script>
+  <script src="/assets/nav.js"></script>
 </body>
 </html>

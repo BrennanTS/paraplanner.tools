@@ -32,10 +32,14 @@
     </div>
 
     <section>
-      <div class="worlds tabs" id="jump" role="tablist"></div>
-      <div class="fields search">
-        <label>Search all resources<input id="q" type="search" placeholder="e.g. IRMAA, RMD, 529, estate tax" autocomplete="off"></label>
+      <div class="section-head">
+        <div>
+          <h2>Sources by world</h2>
+          <p class="sub">Official sources for each of the five worlds of a plan.</p>
+        </div>
+        <input id="q" class="search-box" type="search" placeholder="Search all, e.g. IRMAA, RMD, 529" aria-label="Search all resources" autocomplete="off">
       </div>
+      <div class="worlds tabs" id="jump" role="tablist"></div>
       <div id="groups"></div>
       <p class="sub" id="empty" hidden>No resources match that search.</p>
     </section>
@@ -60,14 +64,13 @@
 
     const row = i => `
       <a class="res-row" href="${esc(i.url)}" target="_blank" rel="noopener">
-        <span class="res-text"><span class="res-name">${esc(i.name)} <span class="ext">↗</span></span><span class="res-desc">${esc(i.desc)}</span></span>
-        <span class="tag">${esc(i.org)}</span>
+        <span class="res-text"><span class="res-name">${esc(i.name)}</span><span class="res-desc">${esc(i.desc)}</span></span>
+        <span class="res-src">${esc(i.org)} <span>↗</span></span>
       </a>`;
 
     const block = (g, items) => `
-      <div class="res-group">
-        <h2>${esc(g.group)}</h2>
-        <p class="sub">${esc(g.blurb)}</p>
+      <div class="assume-set">
+        <div class="set-label">${esc(g.group)} <span>${esc(g.blurb)}</span></div>
         <div class="res-list">${items.map(row).join("")}</div>
       </div>`;
 

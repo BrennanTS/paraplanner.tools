@@ -29,6 +29,7 @@ a:hover { text-decoration: underline; }
 .brand { font: 700 15px var(--mono); color: var(--text); letter-spacing: .04em; white-space: nowrap; }
 .brand span { color: var(--blue); }
 .brand:hover { text-decoration: none; }
+.brand em i { font-style: normal; color: var(--muted); margin: 0 6px; }
 .brand em { font-style: normal; color: var(--text); font-size: 10px; border: 1px solid var(--text); padding: 1px 5px; margin-left: 8px; vertical-align: 2px; }
 .nav { display: grid; grid-auto-flow: column; gap: 4px; }
 .nav a { text-align: center; }
